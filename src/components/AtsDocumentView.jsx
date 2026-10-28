@@ -1,15 +1,16 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Copy, ExternalLink, Sparkles, Printer, Check } from 'lucide-react';
+import { Mail, Phone, MapPin, Copy, Printer, Check } from 'lucide-react';
 
 export const AtsDocumentView = ({ resumeData, searchQuery, onCopy, copiedField }) => {
   // Helper function to highlight matching search keywords
   const highlightText = (text) => {
+    if (!text) return '';
     if (!searchQuery || !searchQuery.trim()) return text;
     const regex = new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
     const parts = text.split(regex);
     return parts.map((part, index) =>
       regex.test(part) ? (
-        <mark key={index} className="bg-amber-200 dark:bg-amber-500/40 text-inherit rounded-xs px-0.5 font-semibold">
+        <mark key={index} className="bg-pink-200 dark:bg-pink-500/40 text-inherit rounded-xs px-0.5 font-semibold">
           {part}
         </mark>
       ) : (
@@ -21,90 +22,95 @@ export const AtsDocumentView = ({ resumeData, searchQuery, onCopy, copiedField }
   return (
     <div className="w-full max-w-4xl mx-auto py-8 px-4 sm:px-6 print:p-0">
       {/* ATS Sheet Container - Mimics physical executive resume sheet */}
-      <div className="ats-container bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-xl p-8 sm:p-12 md:p-16 text-zinc-900 dark:text-zinc-100 transition-colors">
+      <div className="ats-container bg-white dark:bg-zinc-900 border border-pink-200/80 dark:border-zinc-800 rounded-2xl shadow-xl shadow-pink-100/50 p-8 sm:p-12 md:p-14 text-zinc-900 dark:text-zinc-100 transition-colors">
         
         {/* ===== HEADER SECTION ===== */}
         <header className="mb-6">
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-            <div>
+          <div className="flex flex-col-reverse sm:flex-row sm:items-start justify-between gap-6">
+            <div className="space-y-1.5 flex-1">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-950 dark:text-white font-sans">
                 {highlightText(resumeData.name)}
               </h1>
-              <p className="text-sm sm:text-base font-medium text-zinc-600 dark:text-zinc-400 mt-1">
-                {resumeData.title}
-              </p>
-            </div>
-            
-            {/* Quick print button inside sheet for convenience */}
-            <div className="no-print self-start flex items-center gap-2">
-              <button
-                onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-200 transition-colors border border-zinc-200 dark:border-zinc-700"
-                title="Print ATS Formatted Resume"
-              >
-                <Printer className="w-3.5 h-3.5" />
-                <span>Print PDF</span>
-              </button>
-            </div>
-          </div>
 
-          {/* Contact Details Line */}
-          <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-zinc-700 dark:text-zinc-300 font-sans">
-            {/* Phone */}
-            <div className="flex items-center gap-1.5 group">
-              <Phone className="w-4 h-4 text-zinc-400 shrink-0 print:hidden" />
-              <span>{highlightText(resumeData.contact.phone)}</span>
-              <button
-                onClick={() => onCopy(resumeData.contact.phone, 'phone')}
-                className="no-print opacity-0 group-hover:opacity-100 p-1 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-opacity"
-                title="Copy phone"
-              >
-                {copiedField === 'phone' ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-              </button>
-            </div>
+              {/* Contact Details Stack */}
+              <div className="pt-2 space-y-1 text-sm text-zinc-700 dark:text-zinc-300 font-sans">
+                {/* Phone */}
+                <div className="flex items-center gap-2 group">
+                  <span className="font-medium">{highlightText(resumeData.contact.phone)}</span>
+                  <button
+                    onClick={() => onCopy(resumeData.contact.phone, 'phone')}
+                    className="no-print opacity-0 group-hover:opacity-100 p-0.5 text-pink-400 hover:text-pink-600 dark:hover:text-zinc-200 transition-opacity cursor-pointer"
+                    title="Copy phone"
+                  >
+                    {copiedField === 'phone' ? <Check className="w-3.5 h-3.5 text-pink-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
 
-            {/* Email */}
-            <div className="flex items-center gap-1.5 group">
-              <Mail className="w-4 h-4 text-zinc-400 shrink-0 print:hidden" />
-              <a
-                href={`mailto:${resumeData.contact.email}`}
-                className="hover:underline hover:text-indigo-600 dark:hover:text-indigo-400"
-              >
-                {highlightText(resumeData.contact.email)}
-              </a>
-              <button
-                onClick={() => onCopy(resumeData.contact.email, 'email')}
-                className="no-print opacity-0 group-hover:opacity-100 p-1 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-opacity"
-                title="Copy email"
-              >
-                {copiedField === 'email' ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-              </button>
+                {/* Email */}
+                <div className="flex items-center gap-2 group">
+                  <a
+                    href={`mailto:${resumeData.contact.email}`}
+                    className="hover:underline hover:text-pink-600 dark:hover:text-pink-400 font-medium"
+                  >
+                    {highlightText(resumeData.contact.email)}
+                  </a>
+                  <button
+                    onClick={() => onCopy(resumeData.contact.email, 'email')}
+                    className="no-print opacity-0 group-hover:opacity-100 p-0.5 text-pink-400 hover:text-pink-600 dark:hover:text-zinc-200 transition-opacity cursor-pointer"
+                    title="Copy email"
+                  >
+                    {copiedField === 'email' ? <Check className="w-3.5 h-3.5 text-pink-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+
+                {/* Address */}
+                <div className="flex items-center gap-2 group">
+                  <span>{highlightText(resumeData.contact.address)}</span>
+                  <button
+                    onClick={() => onCopy(resumeData.contact.address, 'address')}
+                    className="no-print opacity-0 group-hover:opacity-100 p-0.5 text-pink-400 hover:text-pink-600 dark:hover:text-zinc-200 transition-opacity cursor-pointer"
+                    title="Copy address"
+                  >
+                    {copiedField === 'address' ? <Check className="w-3.5 h-3.5 text-pink-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Address */}
-            <div className="flex items-center gap-1.5 group w-full sm:w-auto">
-              <MapPin className="w-4 h-4 text-zinc-400 shrink-0 print:hidden" />
-              <span>{highlightText(resumeData.contact.address)}</span>
-              <button
-                onClick={() => onCopy(resumeData.contact.address, 'address')}
-                className="no-print opacity-0 group-hover:opacity-100 p-1 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 transition-opacity"
-                title="Copy address"
-              >
-                {copiedField === 'address' ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-              </button>
+            {/* Top Right: Print button + Headshot photo */}
+            <div className="flex sm:flex-col items-end justify-between sm:justify-start gap-4 shrink-0">
+              <div className="no-print">
+                <button
+                  onClick={() => window.print()}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-pink-50 hover:bg-pink-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-pink-700 dark:text-zinc-200 transition-colors border border-pink-200 dark:border-zinc-700 cursor-pointer shadow-2xs"
+                  title="Print ATS Formatted Resume"
+                >
+                  <Printer className="w-3.5 h-3.5 text-pink-600" />
+                  <span>Print PDF</span>
+                </button>
+              </div>
+
+              {/* Portrait Photo */}
+              <div className="w-24 h-32 sm:w-28 sm:h-36 rounded-md overflow-hidden border-2 border-pink-200 dark:border-zinc-700 shadow-xs bg-white dark:bg-zinc-800 shrink-0">
+                <img
+                  src={resumeData.photo || "/profile.jpg"}
+                  alt={resumeData.name}
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
             </div>
           </div>
         </header>
 
         {/* Divider */}
-        <hr className="border-t-2 border-zinc-950 dark:border-zinc-300 mb-6" />
+        <hr className="border-t border-pink-300 dark:border-zinc-700 mb-6" />
 
         {/* ===== OBJECTIVE SECTION ===== */}
-        <section className="mb-8 avoid-break">
-          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-zinc-950 dark:text-white mb-2">
+        <section className="mb-7 avoid-break">
+          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-zinc-950 dark:text-white mb-2 font-sans">
             OBJECTIVE
           </h2>
-          <div className="p-1 rounded-sm">
+          <div>
             <p className="text-sm sm:text-base leading-relaxed text-zinc-800 dark:text-zinc-200 text-justify">
               {highlightText(resumeData.objective)}
             </p>
@@ -112,60 +118,45 @@ export const AtsDocumentView = ({ resumeData, searchQuery, onCopy, copiedField }
         </section>
 
         {/* Divider */}
-        <hr className="border-t border-zinc-300 dark:border-zinc-700 mb-6" />
+        <hr className="border-t border-pink-200 dark:border-zinc-700 mb-6" />
 
         {/* ===== PROJECTS SECTION ===== */}
-        <section className="mb-8">
-          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-zinc-950 dark:text-white mb-4">
+        <section className="mb-7">
+          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-zinc-950 dark:text-white mb-4 font-sans">
             PROJECTS
           </h2>
           <div className="space-y-6">
             {resumeData.projects.map((project) => (
               <article key={project.id} className="avoid-break space-y-1.5">
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between">
-                  <h3 className="text-base sm:text-lg font-bold text-zinc-950 dark:text-white flex items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-bold text-zinc-950 dark:text-white">
                     {highlightText(project.title)}
                   </h3>
                 </div>
-                <div className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-                  {highlightText(project.role)} <span className="font-normal text-zinc-500">| {project.year}</span>
-                </div>
 
-                <ul className="list-disc list-outside ml-5 space-y-1.5 text-sm sm:text-base text-zinc-800 dark:text-zinc-200 pt-1">
+                <ul className="list-disc list-outside ml-5 space-y-1 text-sm sm:text-base text-zinc-800 dark:text-zinc-200 pt-0.5">
                   {project.highlights.map((bullet, idx) => (
                     <li key={idx} className="leading-relaxed">
                       {highlightText(bullet)}
                     </li>
                   ))}
                 </ul>
-
-                {/* Tech badges (subtle, ATS friendly and visible for recruiters) */}
-                <div className="no-print pt-2 flex flex-wrap gap-1.5">
-                  {project.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-0.5 rounded text-xs font-mono font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
-                    >
-                      {highlightText(tech)}
-                    </span>
-                  ))}
-                </div>
               </article>
             ))}
           </div>
         </section>
 
         {/* Divider */}
-        <hr className="border-t border-zinc-300 dark:border-zinc-700 mb-6" />
+        <hr className="border-t border-pink-200 dark:border-zinc-700 mb-6" />
 
         {/* ===== EDUCATION SECTION ===== */}
-        <section className="mb-8 avoid-break">
-          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-zinc-950 dark:text-white mb-4">
+        <section className="mb-7 avoid-break">
+          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-zinc-950 dark:text-white mb-4 font-sans">
             EDUCATION
           </h2>
           <div className="space-y-5">
             {resumeData.education.map((edu, idx) => (
-              <div key={idx} className="space-y-1">
+              <div key={idx} className="space-y-0.5">
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                   <div className="text-sm sm:text-base font-bold text-zinc-950 dark:text-white">
                     {highlightText(edu.degree)}
@@ -177,25 +168,18 @@ export const AtsDocumentView = ({ resumeData, searchQuery, onCopy, copiedField }
                 <div className="text-sm text-zinc-700 dark:text-zinc-300">
                   {highlightText(edu.institution)}
                 </div>
-                {edu.honors && (
-                  <ul className="list-disc list-outside ml-5 text-sm text-zinc-800 dark:text-zinc-200 pt-0.5">
-                    <li className="font-medium text-emerald-700 dark:text-emerald-400">
-                      {highlightText(edu.honors)}
-                    </li>
-                  </ul>
-                )}
               </div>
             ))}
           </div>
         </section>
 
         {/* Divider */}
-        <hr className="border-t border-zinc-300 dark:border-zinc-700 mb-6" />
+        <hr className="border-t border-pink-200 dark:border-zinc-700 mb-6" />
 
-        {/* ===== TECHNICAL SKILLS SECTION ===== */}
+        {/* ===== SKILLS SECTION ===== */}
         <section className="avoid-break">
-          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-zinc-950 dark:text-white mb-4">
-            TECHNICAL SKILLS
+          <h2 className="text-base sm:text-lg font-bold uppercase tracking-wider text-zinc-950 dark:text-white mb-3 font-sans">
+            SKILLS
           </h2>
           <div className="space-y-2.5 text-sm sm:text-base text-zinc-800 dark:text-zinc-200">
             {resumeData.skillCategories.map((cat) => (
@@ -203,14 +187,25 @@ export const AtsDocumentView = ({ resumeData, searchQuery, onCopy, copiedField }
                 <span className="font-bold text-zinc-950 dark:text-white">
                   {highlightText(cat.name)}:
                 </span>{' '}
-                <span className="text-zinc-700 dark:text-zinc-300">
-                  {cat.skills.map((skill, sIdx) => (
-                    <React.Fragment key={skill}>
-                      <span className="inline-block">{highlightText(skill)}</span>
-                      {sIdx < cat.skills.length - 1 ? ', ' : ''}
-                    </React.Fragment>
-                  ))}
-                </span>
+                {cat.type === 'list' ? (
+                  <ul className="list-disc list-outside ml-5 space-y-1 mt-1.5 text-zinc-800 dark:text-zinc-200">
+                    {cat.skills.map((skill, sIdx) => (
+                      <li key={sIdx} className="leading-relaxed">
+                        {highlightText(skill)}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span className="text-zinc-700 dark:text-zinc-300">
+                    {cat.prefix && <span>{highlightText(cat.prefix)}</span>}
+                    {cat.skills.map((skill, sIdx) => (
+                      <React.Fragment key={skill}>
+                        <span className="inline-block">{highlightText(skill)}</span>
+                        {sIdx < cat.skills.length - 1 ? ', ' : ''}
+                      </React.Fragment>
+                    ))}
+                  </span>
+                )}
               </div>
             ))}
           </div>

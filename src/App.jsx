@@ -17,12 +17,11 @@ export const App = () => {
   const [toastMessage, setToastMessage] = useState('');
   const [copiedField, setCopiedField] = useState(null);
 
-  // Initialize theme
+  // Initialize theme (default to light mode so the luminous light-pink theme is active)
   useEffect(() => {
     setIsMounted(true);
     const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+    const shouldBeDark = savedTheme === 'dark';
     setIsDarkMode(shouldBeDark);
   }, []);
 
@@ -60,8 +59,8 @@ export const App = () => {
 
   if (!isMounted) {
     return (
-      <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
-        <div className="text-zinc-500 font-mono text-xs animate-pulse">
+      <div className="min-h-screen bg-[#fff6f8] dark:bg-zinc-950 flex items-center justify-center">
+        <div className="text-pink-400 font-mono text-xs animate-pulse">
           Loading portfolio...
         </div>
       </div>
@@ -69,10 +68,17 @@ export const App = () => {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 selection:bg-indigo-500 selection:text-white transition-colors duration-200">
+    <div className="relative min-h-screen bg-[#fff6f8] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 selection:bg-pink-200 selection:text-pink-900 transition-colors duration-200 overflow-x-hidden">
       
+      {/* Delicate Ambient Pink & White Luminous Background Lights */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-pink-200/40 dark:bg-pink-950/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 -right-32 w-96 h-96 bg-rose-100/60 dark:bg-rose-950/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 left-1/4 w-[32rem] h-[32rem] bg-pink-100/50 dark:bg-pink-950/15 rounded-full blur-3xl" />
+      </div>
+
       {/* Main Content Sections */}
-      <main>
+      <main className="relative z-10">
         <Hero
           personal={portfolioData.personal}
           onOpenResume={() => setResumeModalOpen(true)}

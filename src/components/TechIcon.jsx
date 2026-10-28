@@ -54,6 +54,25 @@ export const TechIcon = ({ name, className = "w-3.5 h-3.5" }) => {
     );
   }
 
+  // Supabase
+  if (normalized.includes('supabase')) {
+    return (
+      <svg className={`${className} text-emerald-500`} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M13.6 2.1c-.8-.9-2.3-.4-2.4.9l-.6 8.3h8.3c1.3 0 1.9 1.6.9 2.4L8.7 22.8c-.8.8-2.2.3-2.3-.9l.7-8.3H-1.5c-1.3 0-2-1.6-.9-2.4L13.6 2.1z" fill="#3ECF8E" />
+      </svg>
+    );
+  }
+
+  // Capacitor
+  if (normalized.includes('capacitor')) {
+    return (
+      <svg className={`${className} text-sky-500`} viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="12" r="10" fill="#119EFF" />
+        <path d="M7 12a5 5 0 0 1 8.5-3.5l1.4-1.4A7 7 0 1 0 19 12h-2a5 5 0 0 1-10 0z" fill="#ffffff" />
+      </svg>
+    );
+  }
+
   // SQLite
   if (normalized.includes('sqlite')) {
     return (
@@ -177,6 +196,24 @@ export const TechIcon = ({ name, className = "w-3.5 h-3.5" }) => {
     return (
       <svg className={`${className} text-emerald-600`} viewBox="0 0 24 24" fill="currentColor">
         <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z" fill="#199900" />
+      </svg>
+    );
+  }
+
+  // HTML / HTML5
+  if (normalized === 'html' || normalized === 'html5') {
+    return (
+      <svg className={`${className} text-orange-500`} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4 3l1.8 15.6L12 21l6.2-2.4L20 3H4zm13.3 4.2l-.3 3.2H8.4l.2 2.2h8.3l-.6 6.3-4.3 1.2-4.3-1.2-.3-3.2h2.2l.2 1.5 2.2.6 2.2-.6.3-2.6H8l-.5-5.2h10l-.2-2.2H6.8L6.4 5.2h11.1l-.2 2z" fill="#E34F26" />
+      </svg>
+    );
+  }
+
+  // CSS / CSS3
+  if (normalized === 'css' || normalized === 'css3') {
+    return (
+      <svg className={`${className} text-blue-500`} viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4 3l1.8 15.6L12 21l6.2-2.4L20 3H4zm13.3 4.2l-.3 3.2H8.4l.2 2.2h8.3l-.6 6.3-4.3 1.2-4.3-1.2-.3-3.2h2.2l.2 1.5 2.2.6 2.2-.6.3-2.6H8l-.5-5.2h10l-.2-2.2H6.8L6.4 5.2h11.1l-.2 2z" fill="#1572B6" />
       </svg>
     );
   }

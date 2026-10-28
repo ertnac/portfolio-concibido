@@ -93,7 +93,7 @@ export const InteractiveWebView = ({ resumeData, onSwitchToDoc, onCopy, copiedFi
 
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-700/80 font-medium text-xs text-zinc-600 dark:text-zinc-300">
                 <MapPin className="w-3.5 h-3.5 text-zinc-400" />
-                <span>Alaminos, Laguna, PH</span>
+                <span>San Pablo City, Laguna</span>
               </div>
             </div>
 
@@ -406,11 +406,11 @@ export const InteractiveWebView = ({ resumeData, onSwitchToDoc, onCopy, copiedFi
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            Ready to hire or collaborate with James?
+            Ready to connect or collaborate with Shanaya?
           </h2>
 
           <p className="text-base text-zinc-300 leading-relaxed">
-            I am currently open to Software Engineering, Full Stack, Frontend, or Backend roles. Feel free to copy my details or send an email directly.
+            I am currently open to IT internships, software development, database, and technical documentation roles. Feel free to copy my details or send an email directly.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
@@ -432,7 +432,7 @@ export const InteractiveWebView = ({ resumeData, onSwitchToDoc, onCopy, copiedFi
               className="flex flex-col items-start p-4 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-colors text-left group"
             >
               <div className="flex items-center justify-between w-full">
-                <span className="text-xs text-zinc-400 font-medium">Phone / WhatsApp</span>
+                <span className="text-xs text-zinc-400 font-medium">Phone Number</span>
                 {copiedField === 'phone-card' ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-zinc-500 group-hover:text-white" />}
               </div>
               <span className="text-sm font-semibold text-white mt-1">
@@ -443,14 +443,14 @@ export const InteractiveWebView = ({ resumeData, onSwitchToDoc, onCopy, copiedFi
             <div className="flex flex-col items-start p-4 rounded-xl bg-zinc-900 border border-zinc-800 text-left">
               <span className="text-xs text-zinc-400 font-medium">Location</span>
               <span className="text-sm font-semibold text-white mt-1">
-                Alaminos, Laguna, PH
+                San Pablo City, Laguna
               </span>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-4 pt-2">
             <a
-              href={`mailto:${resumeData.contact.email}?subject=Job Opportunity / Inquiry for James Clarence Cantre`}
+              href={`mailto:${resumeData.contact.email}?subject=Job Opportunity / Inquiry for Shanaya T. Concibido`}
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg transition-transform hover:-translate-y-0.5"
             >
               <Mail className="w-4 h-4" />
